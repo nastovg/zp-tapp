@@ -1,0 +1,24 @@
+{
+    "generator-jhipster": {
+        "baseName": "tapp",
+        "packageName": "com.gn.tapp",
+        "packageFolder": "com/gn/tapp",
+        "authenticationType": "session",
+        "hibernateCache": "ehcache",
+        "clusteredHttpSession": "no",
+        "websocket": "no",
+        "databaseType": "sql",
+        "devDatabaseType": "h2Disk",
+        "prodDatabaseType": "mysql",
+        "searchEngine": "no",
+        "useSass": false,
+        "buildTool": "maven",
+        "frontendBuilder": "grunt",
+        "enableTranslation": false,
+        "enableSocialSignIn": false,
+        "rememberMeKey": "6dd4abfd8aa5f99f1878ca7a41135f4f5c29b03b",
+        "testFrameworks": [
+            "cucumber"
+        ]
+    }
+}
