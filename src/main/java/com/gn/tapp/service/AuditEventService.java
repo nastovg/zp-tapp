@@ -3,14 +3,12 @@ package com.gn.tapp.service;
 import com.gn.tapp.config.audit.AuditEventConverter;
 import com.gn.tapp.domain.PersistentAuditEvent;
 import com.gn.tapp.repository.PersistenceAuditEventRepository;
-
-import java.time.LocalDateTime;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

@@ -9,7 +9,6 @@ import com.gn.tapp.security.AuthoritiesConstants;
 import com.gn.tapp.service.MailService;
 import com.gn.tapp.service.UserService;
 import com.gn.tapp.web.rest.dto.ManagedUserDTO;
-import com.gn.tapp.web.rest.dto.UserDTO;
 import com.gn.tapp.web.rest.util.HeaderUtil;
 import com.gn.tapp.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -22,13 +21,19 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

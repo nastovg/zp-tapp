@@ -1,8 +1,8 @@
 package com.gn.tapp.web.rest.dto;
 
-import java.time.ZonedDateTime;
-
 import com.gn.tapp.domain.User;
+
+import java.time.ZonedDateTime;
 
 /**
  * A DTO extending the UserDTO, which is meant to be used in the user management UI.

@@ -3,7 +3,6 @@ package com.gn.tapp;
 import com.gn.tapp.config.Constants;
 import com.gn.tapp.config.CurrencyProperties;
 import com.gn.tapp.config.JHipsterProperties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

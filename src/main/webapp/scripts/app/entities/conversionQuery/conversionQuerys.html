@@ -1,0 +1,60 @@
+<div>
+    <h2>ConversionQuerys</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="conversionQuery.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new ConversionQuery</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>ID</span></th>
+                <th><span>Amount</span></th>
+                <th><span>FromCurrency</span></th>
+                <th><span>ToCurrency</span></th>
+                <th><span>ConversionDate</span></th>
+                <th><span>CreatedOn</span></th>
+                <th><span>owner</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="conversionQuery in conversionQuerys track by conversionQuery.id">
+                <td><a ui-sref="conversionQuery.detail({id:conversionQuery.id})">{{conversionQuery.id}}</a></td>
+                <td>{{conversionQuery.amount}}</td>
+                <td>{{conversionQuery.fromCurrency}}</td>
+                <td>{{conversionQuery.toCurrency}}</td>
+                <td>{{conversionQuery.conversionDate | date:'medium'}}</td>
+                <td>{{conversionQuery.createdOn | date:'medium'}}</td>
+                <td>
+                    {{conversionQuery.owner.id}}
+                </td>
+                <td>
+                    <button type="submit"
+                            ui-sref="conversionQuery.detail({id:conversionQuery.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="conversionQuery.edit({id:conversionQuery.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="conversionQuery.delete({id:conversionQuery.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

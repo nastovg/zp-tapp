@@ -24,12 +24,12 @@ angular.module('tappApp')
                 });
 
             },
-            convert: function (units, fromCurrency, toCurrency, exchageRates) {
-                if (fromCurrency == exchageRates.base) {
-                    return (units * exchageRates.exchangeMap[toCurrency]);
+            convert: function (conversionQuery, exchageRates) {
+                if (conversionQuery.fromCurrency == exchageRates.base) {
+                    return (conversionQuery.amount * exchageRates.exchangeMap[conversionQuery.toCurrency]);
                 }
-                var baseUnits = (units / exchageRates.exchangeMap[fromCurrency]);
-                return (baseUnits * exchageRates.exchangeMap[toCurrency]);
+                var baseUnits = (conversionQuery.amount / exchageRates.exchangeMap[conversionQuery.fromCurrency]);
+                return (baseUnits * exchageRates.exchangeMap[conversionQuery.toCurrency]);
             }
         };
     });

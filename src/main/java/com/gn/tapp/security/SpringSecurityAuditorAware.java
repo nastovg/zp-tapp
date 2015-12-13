@@ -1,7 +1,6 @@
 package com.gn.tapp.security;
 
 import com.gn.tapp.config.Constants;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,6 @@ package com.gn.tapp.service;
 
 import com.gn.tapp.config.JHipsterProperties;
 import com.gn.tapp.domain.User;
-
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

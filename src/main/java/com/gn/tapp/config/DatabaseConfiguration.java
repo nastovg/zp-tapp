@@ -1,9 +1,8 @@
 package com.gn.tapp.config;
 
-import com.gn.tapp.config.liquibase.AsyncSpringLiquibase;
-
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.gn.tapp.config.liquibase.AsyncSpringLiquibase;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import liquibase.integration.spring.SpringLiquibase;

@@ -1,7 +1,6 @@
 package com.gn.tapp.repository;
 
 import com.gn.tapp.domain.Authority;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

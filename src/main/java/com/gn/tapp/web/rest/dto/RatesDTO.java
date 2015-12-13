@@ -3,8 +3,6 @@ package com.gn.tapp.web.rest.dto;
 import com.google.common.collect.Maps;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RatesDTO {

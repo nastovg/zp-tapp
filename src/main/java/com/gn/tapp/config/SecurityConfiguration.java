@@ -1,6 +1,10 @@
 package com.gn.tapp.config;
 
-import com.gn.tapp.security.*;
+import com.gn.tapp.security.AjaxAuthenticationFailureHandler;
+import com.gn.tapp.security.AjaxAuthenticationSuccessHandler;
+import com.gn.tapp.security.AjaxLogoutSuccessHandler;
+import com.gn.tapp.security.AuthoritiesConstants;
+import com.gn.tapp.security.Http401UnauthorizedEntryPoint;
 import com.gn.tapp.web.filter.CsrfCookieGeneratorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +16,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
 

@@ -2,7 +2,6 @@ package com.gn.tapp.repository;
 
 import com.gn.tapp.config.audit.AuditEventConverter;
 import com.gn.tapp.domain.PersistentAuditEvent;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
 import org.springframework.context.annotation.Bean;

@@ -1,12 +1,16 @@
 package com.gn.tapp.domain.util;
 
-import com.gn.tapp.domain.util.JSR310DateConverters.*;
-
-import java.time.*;
-import java.util.Date;
+import com.gn.tapp.domain.util.JSR310DateConverters.DateToLocalDateTimeConverter;
+import com.gn.tapp.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import com.gn.tapp.domain.util.JSR310DateConverters.LocalDateTimeToDateConverter;
+import com.gn.tapp.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 public final class JSR310PersistenceConverters {
 

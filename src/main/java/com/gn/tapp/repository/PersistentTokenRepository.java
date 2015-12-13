@@ -2,11 +2,9 @@ package com.gn.tapp.repository;
 
 import com.gn.tapp.domain.PersistentToken;
 import com.gn.tapp.domain.User;
-
-import java.time.LocalDate;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**

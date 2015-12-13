@@ -1,0 +1,141 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myConversionQueryLabel">Create or edit a ConversionQuery</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="conversionQuery.id" readonly/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_amount">Amount</label>
+            <input type="number" class="form-control" name="amount" id="field_amount"
+                   ng-model="conversionQuery.amount"
+                   required min="1" max="1000000000"/>
+
+            <div ng-show="editForm.amount.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.amount.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.amount.$error.min" translate-value-min="1">
+                    This field should be more than 1.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.amount.$error.max" translate-value-max="1000000000">
+                    This field cannot be more than 1000000000.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.amount.$error.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_fromCurrency">FromCurrency</label>
+            <input type="text" class="form-control" name="fromCurrency" id="field_fromCurrency"
+                   ng-model="conversionQuery.fromCurrency"
+                   required ng-minlength="3" ng-maxlength="3"/>
+
+            <div ng-show="editForm.fromCurrency.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.fromCurrency.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.fromCurrency.$error.minlength" translate-value-min="3">
+                    This field is required to be at least 3 characters.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.fromCurrency.$error.maxlength" translate-value-max="3">
+                    This field cannot be longer than 3 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_toCurrency">ToCurrency</label>
+            <input type="text" class="form-control" name="toCurrency" id="field_toCurrency"
+                   ng-model="conversionQuery.toCurrency"
+                   required ng-minlength="3" ng-maxlength="3"/>
+
+            <div ng-show="editForm.toCurrency.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.toCurrency.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.toCurrency.$error.minlength" translate-value-min="3">
+                    This field is required to be at least 3 characters.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.toCurrency.$error.maxlength" translate-value-max="3">
+                    This field cannot be longer than 3 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_conversionDate">ConversionDate</label>
+            <input type="datetime-local" class="form-control" name="conversionDate" id="field_conversionDate"
+                   ng-model="conversionQuery.conversionDate"
+                   required/>
+
+            <div ng-show="editForm.conversionDate.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.conversionDate.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.conversionDate.$error.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_createdOn">CreatedOn</label>
+            <input type="datetime-local" class="form-control" name="createdOn" id="field_createdOn"
+                   ng-model="conversionQuery.createdOn"
+                   required/>
+
+            <div ng-show="editForm.createdOn.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.createdOn.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.createdOn.$error.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="field_owner">owner</label>
+            <select class="form-control" id="field_owner" name="owner" ng-model="conversionQuery.owner" ng-options="user as user.id for user in users track by user.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

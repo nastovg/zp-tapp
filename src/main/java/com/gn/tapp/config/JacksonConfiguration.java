@@ -1,16 +1,18 @@
 package com.gn.tapp.config;
 
-import com.gn.tapp.domain.util.*;
-
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import java.text.DateFormat;
-import java.time.*;
-
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import com.gn.tapp.domain.util.JSR310DateTimeSerializer;
+import com.gn.tapp.domain.util.JSR310LocalDateDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 
 @Configuration
 public class JacksonConfiguration {

@@ -1,7 +1,6 @@
 package com.gn.tapp.aop.logging;
 
 import com.gn.tapp.config.Constants;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
