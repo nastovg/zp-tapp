@@ -7,7 +7,7 @@ angular.module('tappApp')
                 parent: 'entity',
                 url: '/conversionQuerys',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN'],
                     pageTitle: 'ConversionQuerys'
                 },
                 views: {
@@ -23,7 +23,7 @@ angular.module('tappApp')
                 parent: 'entity',
                 url: '/conversionQuery/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN'],
                     pageTitle: 'ConversionQuery'
                 },
                 views: {
@@ -42,7 +42,7 @@ angular.module('tappApp')
                 parent: 'conversionQuery',
                 url: '/new',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -72,7 +72,7 @@ angular.module('tappApp')
                 parent: 'conversionQuery',
                 url: '/{id}/edit',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -95,7 +95,7 @@ angular.module('tappApp')
                 parent: 'conversionQuery',
                 url: '/{id}/delete',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN'],
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({

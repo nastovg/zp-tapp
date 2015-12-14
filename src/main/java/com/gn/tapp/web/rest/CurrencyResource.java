@@ -32,7 +32,7 @@ public class CurrencyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public List<CurrencyDTO> getCurrencies() {
         Map<String, String> currencies = currencyService.getCurrencies();
         if (currencies == null) {
@@ -50,7 +50,7 @@ public class CurrencyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public RatesDTO getLatestRates() {
         Rates rates = currencyService.getLatestRates();
         if (rates == null) {
@@ -63,7 +63,7 @@ public class CurrencyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.USER)
     public RatesDTO getLatestRates(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") Date date) {
         Rates rates = currencyService.getHistoricalRates(date);
         if (rates == null) {

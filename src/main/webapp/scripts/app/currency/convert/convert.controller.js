@@ -2,14 +2,19 @@
 
 angular.module('tappApp')
     .controller('ConvertController', function ($scope, $filter, Principal, DateUtils, CurrencyService, ConversionQuery) {
+        //default values
         $scope.currentConversionQuery = {
             id: null,
             fromCurrency: "EUR",
             toCurrency: "USD",
-            amount: 1,
+            amount: 100,
             conversionDate: new Date(),
             createdOn: new Date()
         }
+        var allowedMaxDate = new Date();
+        //Set tomorrow as max allowed date.
+        allowedMaxDate.setDate(allowedMaxDate.getDate() + 1);
+        $scope.maxAllowedDate = allowedMaxDate;
         $scope.errorSaving = false;
         $scope.startConversion = true;
 
@@ -25,21 +30,26 @@ angular.module('tappApp')
 
         });
         $scope.convert = function () {
-            CurrencyService.getHistoricalRates($scope.currentConversionQuery.conversionDate).then(function (data) {
-                var resultValue = CurrencyService.convert($scope.currentConversionQuery, data);
-                $scope.resultAmount = $filter('currency')(resultValue, ' ', 2);
-                if (!$scope.selectedConversion && !$scope.startConversion) {
+            if ($scope.conversionForm.$valid) {
+                CurrencyService.getHistoricalRates($scope.currentConversionQuery.conversionDate).then(function (data) {
+                    var resultValue = CurrencyService.convert($scope.currentConversionQuery, data);
+                    $scope.resultAmount = $filter('currency')(resultValue, ' ', 2);
+                    if (!$scope.selectedConversion && !$scope.startConversion) {
+                        $scope.startConversion = false;
+                        saveConversionQuery();
+                    }
+                    $scope.selectedConversion = false;
                     $scope.startConversion = false;
-                    saveConversionQuery();
-                }
-                $scope.selectedConversion = false;
-                $scope.startConversion = false;
-            });
+                });
+            }
         }
 
         $scope.conversionQuerys = [];
         $scope.loadLatest = function () {
             ConversionQuery.latest(function (result) {
+                if ($scope.conversionQuerys != null) {
+                    $scope.conversionQuerys = [];
+                }
                 $scope.conversionQuerys = result;
             });
         };

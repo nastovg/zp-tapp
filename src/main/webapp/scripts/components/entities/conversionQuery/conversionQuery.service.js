@@ -4,7 +4,7 @@ angular.module('tappApp')
     .factory('ConversionQuery', function ($resource, DateUtils) {
         return $resource('api/conversionQuerys/:id', {}, {
             'query': { method: 'GET', isArray: true},
-            'latest': { method: 'GET', isArray: true},
+            'latest': {params: {id: 'latest'}, method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

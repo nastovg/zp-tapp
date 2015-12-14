@@ -3,6 +3,7 @@ package com.gn.tapp.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.gn.tapp.domain.ConversionQuery;
 import com.gn.tapp.domain.User;
+import com.gn.tapp.security.AuthoritiesConstants;
 import com.gn.tapp.security.SecurityUtils;
 import com.gn.tapp.service.ConversionQueryService;
 import com.gn.tapp.service.UserService;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +49,7 @@ public class ConversionQueryResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<ConversionQuery> createConversionQuery(@Valid @RequestBody ConversionQuery conversionQuery) throws URISyntaxException {
         log.debug("REST request to save ConversionQuery : {}", conversionQuery);
         if (conversionQuery.getId() != null) {
@@ -68,6 +71,7 @@ public class ConversionQueryResource {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<ConversionQuery> updateConversionQuery(@Valid @RequestBody ConversionQuery conversionQuery) throws URISyntaxException {
         log.debug("REST request to update ConversionQuery : {}", conversionQuery);
         if (conversionQuery.getId() == null) {
@@ -86,6 +90,7 @@ public class ConversionQueryResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public List<ConversionQuery> getAllConversionQuerys() {
         log.debug("REST request to get all ConversionQuerys");
         return conversionQueryService.findAll();
@@ -98,6 +103,7 @@ public class ConversionQueryResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public List<ConversionQuery> getLatestConversionQuerys() {
         log.debug("REST request to get latest ConversionQuerys for current user");
         String currentUserLogin = SecurityUtils.getCurrentUserLogin();
@@ -111,6 +117,7 @@ public class ConversionQueryResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<ConversionQuery> getConversionQuery(@PathVariable Long id) {
         log.debug("REST request to get ConversionQuery : {}", id);
         ConversionQuery conversionQuery = conversionQueryService.findOne(id);
@@ -128,6 +135,7 @@ public class ConversionQueryResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Void> deleteConversionQuery(@PathVariable Long id) {
         log.debug("REST request to delete ConversionQuery : {}", id);
         conversionQueryService.delete(id);

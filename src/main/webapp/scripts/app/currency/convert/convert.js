@@ -7,7 +7,7 @@ angular.module('tappApp')
                 parent: 'currency',
                 url: '/convert',
                 data: {
-                    authorities: ['ROLE_ADMIN'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'Currency Convert'
                 },
                 views: {

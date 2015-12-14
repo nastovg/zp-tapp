@@ -1,77 +1,104 @@
 <div>
-    <h2>Currency Conversion</h2>
+    <h2>Currency Convertor</h2>
 
-    <div class="row" ng-show="errorSaving">
-        <div class="alert alert-danger" role="alert">
+
+    <form name="conversionForm" novalidate>
+
+        <div class="alert alert-warning" role="alert" ng-show="!conversionForm.$valid">
+            Error in the entered data.
+        </div>
+
+        <div class="alert alert-warning" role="alert"
+             ng-show="conversionForm.amount.$error.min">
+            Amount field should be greater than 0.
+        </div>
+        <div class="alert alert-warning" role="alert"
+             ng-show="conversionForm.amount.$error.max">
+            Amount field should be less than 1 000 000 000.
+        </div>
+        <div class="alert alert-warning" role="alert"
+             ng-show="conversionForm.conversionDate.$error.min">
+            Date should be after 01-01-1999.
+        </div>
+        <div class="alert alert-warning" role="alert"
+             ng-show="conversionForm.conversionDate.$error.max">
+            Date shouldn't be in the future.
+        </div>
+
+        <div class="alert alert-danger" role="alert" ng-show="errorSaving">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             Error while saving a conversion query
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <input type="number" class="form-control" id="currentConversionQuery.amount" ng-model="currentConversionQuery.amount" name="currentConversionQuery.amount" placeholder="currency amount"
-                       ng-model-options='{ debounce: 1000 }'
-                       min="0" max="999999999" ng-pattern="/^[0-9]*$/" required ng-change="convert()">
 
-            </div>
-            <div class="col-md-3">
-                <select ng-model="currentConversionQuery.fromCurrency" name="currentConversionQuery.fromCurrency" class="form-control"
-                        ng-options="item.code as item.name for item in currencies" ng-change="convert()"></select>
-            </div>
-            <div class="col-md-3">
-                <input type="date" class="form-control" id="currentConversionQuery.conversionDate" ng-model="currentConversionQuery.conversionDate" name="currentConversionQuery.conversionDate"
-                       placeholder="Rate date"
-                       min="1999-01-01" ng-change="convert()">
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control" id="currentConversionQuery.amount" ng-model="currentConversionQuery.amount" name="amount"
+                           placeholder="currency amount"
+                           ng-model-options='{ debounce: 1000 }'
+                           min="1" max="999999999" ng-pattern="/^[0-9]*$/" required ng-change="convert()">
 
+                </div>
+                <div class="col-md-3">
+                    <select ng-model="currentConversionQuery.fromCurrency" name="currentConversionQuery.fromCurrency" class="form-control"
+                            ng-options="item.code as item.name for item in currencies" ng-change="convert()"></select>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="currentConversionQuery.conversionDate" ng-model="currentConversionQuery.conversionDate" name="conversionDate"
+                           placeholder="Rate date"
+                           min="1999-01-01" max="{{maxAllowedDate | date : 'yyyy-MM-dd'}}" ng-change="convert()">
+                     <span class="error" ng-show="conversionForm.currentConversionQuery.conversionDate.$error.date">
+         Not a valid date!</span>
+
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <input type="text" id="resultAmount" name="resultAmount" placeholder="No result" class="form-control conversion-result"
-                       ng-model="resultAmount" readonly>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <input type="text" id="resultAmount" name="resultAmount" placeholder="No result" class="form-control conversion-result"
+                           ng-model="resultAmount" readonly>
+                </div>
+                <div class="col-md-3">
+                    <select ng-model="currentConversionQuery.toCurrency" name="currentConversionQuery.toCurrency" class="form-control"
+                            ng-options="item.code as item.name for item in currencies" ng-change="convert()"></select>
+                </div>
+                <div class="col-md-5"></div>
             </div>
-            <div class="col-md-3">
-                <select ng-model="currentConversionQuery.toCurrency" name="currentConversionQuery.toCurrency" class="form-control"
-                        ng-options="item.code as item.name for item in currencies" ng-change="convert()"></select>
-            </div>
-            <div class="col-md-5"></div>
         </div>
-    </div>
 
 
-    <h3 ng-show="conversionQuerys.length">History</h3>
+        <h3 ng-show="conversionQuerys.length">History</h3>
 
-    <div class="table-responsive" ng-show="conversionQuerys.length">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><span>Amount</span></th>
-                <th><span>From</span></th>
-                <th><span>To</span></th>
-                <th><span>Date</span></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="conversionQuery in conversionQuerys track by conversionQuery.id">
-                <td>{{conversionQuery.amount}}</td>
-                <td>{{conversionQuery.fromCurrency}}</td>
-                <td>{{conversionQuery.toCurrency}}</td>
-                <td>{{conversionQuery.conversionDate | date:'dd/MM/yyyy'}}</td>
-                <td>
-                    <button
-                            ng-click="selectQuery(conversionQuery)"
-                            class="btn btn-info">
-                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> Use</span>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="table-responsive" ng-show="conversionQuerys.length">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><span>Amount</span></th>
+                    <th><span>From</span></th>
+                    <th><span>To</span></th>
+                    <th><span>Date</span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="conversionQuery in conversionQuerys track by conversionQuery.id">
+                    <td>{{conversionQuery.amount}}</td>
+                    <td>{{conversionQuery.fromCurrency}}</td>
+                    <td>{{conversionQuery.toCurrency}}</td>
+                    <td>{{conversionQuery.conversionDate | date:'yyyy/MM/dd'}}</td>
+                    <td>
+                        <button
+                                ng-click="selectQuery(conversionQuery)"
+                                class="btn btn-info">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> Use</span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
 </div>

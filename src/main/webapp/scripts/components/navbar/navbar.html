@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/"><span>jhipster</span> <span class="navbar-version">v{{VERSION}}</span></a>
+            <a class="navbar-brand" href="#/"><span>gn-ZP-tapp</span> <span class="navbar-version">v{{VERSION}}</span></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
@@ -17,8 +17,21 @@
                         <span class="hidden-sm">Home</span>
                     </a>
                 </li>
+                <li ng-class="{active: $state.includes('currency')}" ng-switch-when="true" has-authority="ROLE_USER" class="dropdown pointer">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="" id="currency-menu">
+                        <span>
+                            <span class="glyphicon glyphicon-tower"></span>
+                            <span class="hidden-sm">Currency</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active"><a ui-sref="convert" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-euro"></span>
+                            &#xA0;<span>Convertor</span></a></li>
+                    </ul>
+                </li>
                 <!-- jhipster-needle-001 - JHipster will add new menu items here -->
-                <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
+                <li has-authority="ROLE_ADMIN" ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -60,19 +73,6 @@
                         <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="register" data-toggle="collapse" data-target=".navbar-collapse.in"><span
                                 class="glyphicon glyphicon-plus-sign"></span>
                             &#xA0;<span>Register</span></a></li>
-                    </ul>
-                </li>
-                <li ng-class="{active: $state.includes('currency')}" ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="" id="currency-menu">
-                        <span>
-                            <span class="glyphicon glyphicon-tower"></span>
-                            <span class="hidden-sm">Currency</span>
-                            <b class="caret"></b>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="convert" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-euro"></span>
-                            &#xA0;<span>Currency Conversion</span></a></li>
                     </ul>
                 </li>
                 <li ng-class="{active: $state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_ADMIN" class="dropdown pointer">

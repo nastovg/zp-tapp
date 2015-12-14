@@ -18,7 +18,7 @@ angular.module('tappApp')
             }).then(function () {
                 $scope.authenticationError = false;
                 if ($rootScope.previousStateName === 'register') {
-                    $state.go('home');
+                    $state.go('convert');
                 } else {
                     $rootScope.back();
                 }

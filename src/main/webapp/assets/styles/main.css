@@ -70,8 +70,8 @@ Browser Upgrade Prompt
 .hipster {
     display: inline-block;
     width: 347px;
-    height: 497px;
-    background: url("../images/hipster.png") no-repeat center top;
+    height: 497px !important;
+    background: url("../images/liverpool_bank.png") no-repeat center top;
     background-size: contain;
 }
 
