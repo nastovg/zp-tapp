@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 sudo: false
 before_install: mvn test
-install: nmvn install
+install: mvn install
 ##before_script: grunt build
 notifications:
   webhooks:
