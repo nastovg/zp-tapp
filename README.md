@@ -1,5 +1,8 @@
 # tapp
 
+Application for secure currency convertor. In order to use the convertor every user must be registered and authenticated.
+The tapp is using the service from openexchangerates (https://openexchangerates.org/api/) 
+
 This application is build on JHipster as base project.
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
@@ -55,7 +58,7 @@ To setup this project in Jenkins, use the following configuration:
 
 * Project name: `tapp`
 * Source Code Management
-    * Git Repository: `git@github.com:xxxx/tapp.git`
+    * Git Repository: `git@github.com:nastovg/zp-tapp.git`
     * Branches to build: `*/master`
     * Additional Behaviours: `Wipe out repository & force clone`
 * Build Triggers
@@ -73,3 +76,10 @@ To setup this project in Jenkins, use the following configuration:
 [Karma]: http://karma-runner.github.io/
 [Jasmine]: http://jasmine.github.io/2.0/introduction.html
 [Protractor]: https://angular.github.io/protractor/
+
+# Notes
+
+* A user is activated automatically after the registration,  without validation email.
+* Validation of the conversion date not fully solved.( The date should not be in future and the if the user is quering between 23:59 and 00:01
+ a validation error might appear)
+* User first and last name are available as field in the user account after the user login.

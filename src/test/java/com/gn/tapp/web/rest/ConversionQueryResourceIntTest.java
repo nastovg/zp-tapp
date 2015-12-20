@@ -2,21 +2,22 @@ package com.gn.tapp.web.rest;
 
 import com.gn.tapp.Application;
 import com.gn.tapp.domain.ConversionQuery;
+import com.gn.tapp.repository.AuthorityRepository;
 import com.gn.tapp.repository.ConversionQueryRepository;
 import com.gn.tapp.service.ConversionQueryService;
-
+import com.gn.tapp.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.Matchers.hasItem;
-
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -27,14 +28,20 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the ConversionQueryResource REST controller.
@@ -58,9 +65,14 @@ public class ConversionQueryResourceIntTest {
     private static final ZonedDateTime DEFAULT_CONVERSION_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
     private static final String DEFAULT_CONVERSION_DATE_STR = dateTimeFormatter.format(DEFAULT_CONVERSION_DATE);
     private static final ZonedDateTime UPDATED_CONVERSION_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final ZonedDateTime DEFAULT_CREATED_ON = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
-    private static final String DEFAULT_CREATED_ON_STR = dateTimeFormatter.format(DEFAULT_CREATED_ON);
     private static final ZonedDateTime UPDATED_CREATED_ON = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    @Inject
+    private AuthorityRepository authorityRepository;
+
+    @Inject
+    private UserService userService;
+
     @Inject
     private ConversionQueryRepository conversionQueryRepository;
 
@@ -80,7 +92,10 @@ public class ConversionQueryResourceIntTest {
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
+
         ConversionQueryResource conversionQueryResource = new ConversionQueryResource();
+        ReflectionTestUtils.setField(conversionQueryResource, "userService", userService);
+
         ReflectionTestUtils.setField(conversionQueryResource, "conversionQueryService", conversionQueryService);
         this.restConversionQueryMockMvc = MockMvcBuilders.standaloneSetup(conversionQueryResource)
                 .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -88,19 +103,23 @@ public class ConversionQueryResourceIntTest {
     }
 
     @Before
-    public void initTest() {
+    public void initTest() throws Exception {
         conversionQuery = new ConversionQuery();
         conversionQuery.setAmount(DEFAULT_AMOUNT);
         conversionQuery.setFromCurrency(DEFAULT_FROM_CURRENCY);
         conversionQuery.setToCurrency(DEFAULT_TO_CURRENCY);
         conversionQuery.setConversionDate(DEFAULT_CONVERSION_DATE);
-        conversionQuery.setCreatedOn(DEFAULT_CREATED_ON);
+        conversionQuery.setCreatedOn(ZonedDateTime.now());
     }
 
     @Test
     @Transactional
     public void createConversionQuery() throws Exception {
         int databaseSizeBeforeCreate = conversionQueryRepository.findAll().size();
+
+        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
+        SecurityContextHolder.setContext(securityContext);
 
         // Create the ConversionQuery
 
@@ -117,7 +136,6 @@ public class ConversionQueryResourceIntTest {
         assertThat(testConversionQuery.getFromCurrency()).isEqualTo(DEFAULT_FROM_CURRENCY);
         assertThat(testConversionQuery.getToCurrency()).isEqualTo(DEFAULT_TO_CURRENCY);
         assertThat(testConversionQuery.getConversionDate()).isEqualTo(DEFAULT_CONVERSION_DATE);
-        assertThat(testConversionQuery.getCreatedOn()).isEqualTo(DEFAULT_CREATED_ON);
     }
 
     @Test
@@ -224,8 +242,7 @@ public class ConversionQueryResourceIntTest {
                 .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT)))
                 .andExpect(jsonPath("$.[*].fromCurrency").value(hasItem(DEFAULT_FROM_CURRENCY.toString())))
                 .andExpect(jsonPath("$.[*].toCurrency").value(hasItem(DEFAULT_TO_CURRENCY.toString())))
-                .andExpect(jsonPath("$.[*].conversionDate").value(hasItem(DEFAULT_CONVERSION_DATE_STR)))
-                .andExpect(jsonPath("$.[*].createdOn").value(hasItem(DEFAULT_CREATED_ON_STR)));
+                .andExpect(jsonPath("$.[*].conversionDate").value(hasItem(DEFAULT_CONVERSION_DATE_STR)));
     }
 
     @Test
@@ -242,8 +259,7 @@ public class ConversionQueryResourceIntTest {
                 .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT))
                 .andExpect(jsonPath("$.fromCurrency").value(DEFAULT_FROM_CURRENCY.toString()))
                 .andExpect(jsonPath("$.toCurrency").value(DEFAULT_TO_CURRENCY.toString()))
-                .andExpect(jsonPath("$.conversionDate").value(DEFAULT_CONVERSION_DATE_STR))
-                .andExpect(jsonPath("$.createdOn").value(DEFAULT_CREATED_ON_STR));
+                .andExpect(jsonPath("$.conversionDate").value(DEFAULT_CONVERSION_DATE_STR));
     }
 
     @Test

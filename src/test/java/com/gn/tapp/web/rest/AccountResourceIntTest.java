@@ -25,7 +25,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyObject;
@@ -34,7 +38,9 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Test class for the AccountResource REST controller.
@@ -147,9 +153,14 @@ public class AccountResourceIntTest {
                 "password",             // password
                 "Joe",                  // firstName
                 "Shmoe",                // lastName
+                ZonedDateTime.now().minusYears(10),
                 "joe@example.com",      // e-mail
-                true,                   // activated
+                true,                    // activated
                 "en",                   // langKey
+                "Nova 12",
+                "5432",
+                "London",
+                "UK",
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
@@ -171,9 +182,14 @@ public class AccountResourceIntTest {
                 "password",             // password
                 "Funky",                // firstName
                 "One",                  // lastName
+                ZonedDateTime.now().minusYears(12),
                 "funky@example.com",    // e-mail
                 true,                   // activated
                 "en",                   // langKey
+                "Nova 24",              //street and number
+                "5432",                 //zip code
+                "London",               //place
+                "UK",                   //country
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
@@ -195,9 +211,14 @@ public class AccountResourceIntTest {
                 "password",         // password
                 "Bob",              // firstName
                 "Green",            // lastName
+                ZonedDateTime.now().minusYears(10),
                 "invalid",          // e-mail <-- invalid
                 true,               // activated
                 "en",               // langKey
+                "Nova 24",              //street and number
+                "5432",                 //zip code
+                "London",               //place
+                "UK",                   //country
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
@@ -220,15 +241,20 @@ public class AccountResourceIntTest {
                 "password",             // password
                 "Alice",                // firstName
                 "Something",            // lastName
+                ZonedDateTime.now().minusYears(10),
                 "alice@example.com",    // e-mail
                 true,                   // activated
                 "en",                   // langKey
+                "Nova 24",              //street and number
+                "5432",                 //zip code
+                "London",               //place
+                "UK",                   //country
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
         // Duplicate login, different e-mail
-        UserDTO dup = new UserDTO(u.getLogin(), u.getPassword(), u.getLogin(), u.getLastName(),
-                "alicejr@example.com", true, u.getLangKey(), u.getAuthorities());
+        UserDTO dup = new UserDTO(u.getLogin(), u.getPassword(), u.getLogin(), u.getLastName(), u.getBirth(),
+                "alicejr@example.com", true, u.getLangKey(), u.getAddress(), u.getZip(), u.getPlace(), u.getCountry(), u.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -257,15 +283,20 @@ public class AccountResourceIntTest {
                 "password",             // password
                 "John",                 // firstName
                 "Doe",                  // lastName
+                ZonedDateTime.now().minusYears(10),
                 "john@example.com",     // e-mail
                 true,                   // activated
                 "en",                   // langKey
+                "Nova 24",              //street and number
+                "5432",                 //zip code
+                "London",               //place
+                "UK",                   //country
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
         // Duplicate e-mail, different login
-        UserDTO dup = new UserDTO("johnjr", u.getPassword(), u.getLogin(), u.getLastName(),
-                u.getEmail(), true, u.getLangKey(), u.getAuthorities());
+        UserDTO dup = new UserDTO("johnjr", u.getPassword(), u.getLogin(), u.getLastName(), u.getBirth(),
+                u.getEmail(), true, u.getLangKey(), u.getAddress(), u.getZip(), u.getPlace(), u.getCountry(), u.getAuthorities());
 
         // Good user
         restMvc.perform(
@@ -293,9 +324,14 @@ public class AccountResourceIntTest {
                 "password",             // password
                 "Bad",                  // firstName
                 "Guy",                  // lastName
+                ZonedDateTime.now().minusYears(10),
                 "badguy@example.com",   // e-mail
                 true,                   // activated
                 "en",                   // langKey
+                "Nova 24",              //street and number
+                "5432",                 //zip code
+                "London",               //place
+                "UK",                   //country
                 new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)) // <-- only admin should be able to do that
         );
 

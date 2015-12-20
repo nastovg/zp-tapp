@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,7 @@ public class ConversionQueryResource {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin();
         Optional<User> currentUser = userService.getUserWithAuthoritiesByLogin(currentUserLogin);
         conversionQuery.setOwner(currentUser.get());
+        conversionQuery.setCreatedOn(ZonedDateTime.now());
         ConversionQuery result = conversionQueryService.save(conversionQuery);
         return ResponseEntity.created(new URI("/api/conversionQuerys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("conversionQuery", result.getId().toString()))

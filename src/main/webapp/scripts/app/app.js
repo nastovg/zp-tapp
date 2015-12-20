@@ -2,7 +2,7 @@
 
 angular.module('tappApp', ['LocalStorageModule',
     'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload',
-    'ui.bootstrap', 'ui.router', 'infinite-scroll', 'angular-loading-bar'])
+    'ui.bootstrap', 'ui.router', 'infinite-scroll', 'angular-loading-bar', 'countrySelect'])
 
     .run(function ($rootScope, $location, $window, $http, $state, Auth, Principal, ENV, VERSION) {
 

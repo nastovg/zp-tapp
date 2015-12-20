@@ -7,6 +7,17 @@ angular.module('tappApp')
         $scope.doNotMatch = null;
         $scope.errorUserExists = null;
         $scope.registerAccount = {};
+        var userdob = new Date();
+        userdob.setYear(userdob.getFullYear() + 1)
+
+        // The oldest allowed subscriber can be 140 years old.
+        $scope.minAllowedBirthDate = new Date();
+        $scope.minAllowedBirthDate.setYear($scope.minAllowedBirthDate.getFullYear() - 140);
+
+        // The youngest allowed subscriber can be 6 years old.
+        $scope.maxAllowedBirthDate = new Date();
+        $scope.maxAllowedBirthDate.setYear($scope.maxAllowedBirthDate.getFullYear() - 6);
+
         $timeout(function () {
             angular.element('[ng-model="registerAccount.login"]').focus();
         });

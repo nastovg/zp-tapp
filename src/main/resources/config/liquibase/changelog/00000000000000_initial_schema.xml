@@ -29,9 +29,15 @@
             <column name="password_hash" type="varchar(60)"/>
             <column name="first_name" type="varchar(50)"/>
             <column name="last_name" type="varchar(50)"/>
+            <column name="birth" type="timestamp"/>
             <column name="email" type="varchar(100)">
                 <constraints unique="true"/>
             </column>
+            <column name="address" type="varchar(200)"/>
+            <column name="zip" type="varchar(10)"/>
+            <column name="place" type="varchar(100)"/>
+            <column name="country" type="varchar(2)"/>
+
             <column name="activated" type="boolean" valueBoolean="false">
                 <constraints nullable="false"/>
             </column>

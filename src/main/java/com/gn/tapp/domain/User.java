@@ -58,6 +58,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
+    @Column(name = "birth")
+    private ZonedDateTime birth;
+
+    @Size(max = 200)
+    @Column(name = "address", length = 200)
+    private String address;
+
+    @Size(max = 10)
+    @Column(name = "zip", length = 10)
+    private String zip;
+
+    @Size(max = 100)
+    @Column(name = "place", length = 100)
+    private String place;
+
+    @Size(max = 2)
+    @Column(name = "country", length = 2)
+    private String country;
+
     @Email
     @Size(max = 100)
     @Column(length = 100, unique = true)
@@ -136,6 +155,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.lastName = lastName;
     }
 
+    public ZonedDateTime getBirth() {
+        return birth;
+    }
+
+    public void setBirth(final ZonedDateTime birth) {
+        this.birth = birth;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -200,6 +227,38 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.persistentTokens = persistentTokens;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(final String address) {
+        this.address = address;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(final String zip) {
+        this.zip = zip;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(final String place) {
+        this.place = place;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(final String country) {
+        this.country = country;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -229,10 +288,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
                 "login='" + login + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", zip='" + zip + '\'' +
+                ", place='" + place + '\'' +
+                ", country='" + country + '\'' +
                 ", email='" + email + '\'' +
-                ", activated='" + activated + '\'' +
+                ", activated=" + activated +
                 ", langKey='" + langKey + '\'' +
                 ", activationKey='" + activationKey + '\'' +
-                "}";
+                '}';
     }
 }

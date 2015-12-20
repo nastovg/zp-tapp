@@ -5,26 +5,23 @@ import com.gn.tapp.domain.PersistentToken;
 import com.gn.tapp.domain.User;
 import com.gn.tapp.repository.PersistentTokenRepository;
 import com.gn.tapp.repository.UserRepository;
-
-import java.time.ZonedDateTime;
-
 import com.gn.tapp.service.util.RandomUtil;
-
-import java.time.LocalDate;
-
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the UserResource REST controller.
@@ -71,7 +68,9 @@ public class UserServiceIntTest {
         assertThat(maybeUser.get().getResetKey()).isNotNull();
     }
 
+    //This test is ignored because the users are activated automatically after the registration.
     @Test
+    @Ignore
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
         User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US");
         Optional<User> maybeUser = userService.requestPasswordReset("john.doe@localhost");
