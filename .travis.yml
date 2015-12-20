@@ -1,10 +1,10 @@
-language: node_js
-node_js:
-  - "0.12"
+language: java
+java:
+  - "Oracle JDK 8"
 sudo: false
-before_install: npm install -g grunt-cli
-install: npm install
-before_script: grunt build
+before_install: mvn test
+install: nmvn install
+##before_script: grunt build
 notifications:
   webhooks:
     on_success: change  # options: [always|never|change] default: always
