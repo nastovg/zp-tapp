@@ -79,7 +79,8 @@ To setup this project in Jenkins, use the following configuration:
 
 # Notes
 
-* A user is activated automatically after the registration,  without validation email.
-* Validation of the conversion date not fully solved.( The date should not be in future and the if the user is quering between 23:59 and 00:01
+* A user is activated automatically after the registration, without validation email.
+* Validation of the conversion date not fully solved.( The date should not be in future and the if the user is querying between 23:59 and 00:01
  a validation error might appear)
 * User first and last name are available as field in the user account after the user login.
+* The exchange rates gathered from the server are not cached on the client side
