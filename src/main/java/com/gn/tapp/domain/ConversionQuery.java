@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -48,6 +49,10 @@ public class ConversionQuery implements Serializable {
     @Size(min = 3, max = 3)
     @Column(name = "to_currency", length = 3, nullable = false)
     private String toCurrency;
+
+    @NotNull
+    @Column(name = "result")
+    private BigDecimal result;
 
     @NotNull
     @Column(name = "conversion_date", nullable = false)
@@ -91,6 +96,14 @@ public class ConversionQuery implements Serializable {
 
     public void setToCurrency(String toCurrency) {
         this.toCurrency = toCurrency;
+    }
+
+    public BigDecimal getResult() {
+        return result;
+    }
+
+    public void setResult(final BigDecimal result) {
+        this.result = result;
     }
 
     public ZonedDateTime getConversionDate() {

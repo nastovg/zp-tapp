@@ -8,15 +8,20 @@ angular.module('tappApp')
             fromCurrency: "EUR",
             toCurrency: "USD",
             amount: 100,
+            result: 0,
             conversionDate: new Date(),
             createdOn: new Date()
         }
         var allowedMaxDate = new Date();
+        var cachedExchangeRates = {};
         //Set tomorrow as max allowed date.
         allowedMaxDate.setDate(allowedMaxDate.getDate() + 1);
         $scope.maxAllowedDate = allowedMaxDate;
         $scope.errorSaving = false;
         $scope.startConversion = true;
+
+
+
 
         Principal.identity().then(function (account) {
             $scope.account = account;
@@ -31,17 +36,33 @@ angular.module('tappApp')
         });
         $scope.convert = function () {
             if ($scope.conversionForm.$valid) {
-                CurrencyService.getHistoricalRates($scope.currentConversionQuery.conversionDate).then(function (data) {
-                    var resultValue = CurrencyService.convert($scope.currentConversionQuery, data);
-                    $scope.resultAmount = $filter('currency')(resultValue, ' ', 2);
-                    if (!$scope.selectedConversion && !$scope.startConversion) {
-                        $scope.startConversion = false;
-                        saveConversionQuery();
-                    }
-                    $scope.selectedConversion = false;
-                    $scope.startConversion = false;
-                });
+                var formatedConversionDate = formatDate($scope.currentConversionQuery.conversionDate);
+                var cachedExchangeRate = cachedExchangeRates[formatedConversionDate];
+                if (cachedExchangeRate) {
+                    convertWithExchangeRate(cachedExchangeRate);
+                } else {
+                    CurrencyService.getHistoricalRates($scope.currentConversionQuery.conversionDate).then(function (data) {
+                        cachedExchangeRates[formatedConversionDate] = data;
+                        convertWithExchangeRate(data);
+                    });
+                }
             }
+        }
+
+        var formatDate = function(date) {
+            var formatedDate = $filter('date')(date, 'dd-MM-yyyy');
+            return formatedDate;
+        }
+
+        var convertWithExchangeRate = function(exchangeRate) {
+            $scope.currentConversionQuery.result = CurrencyService.convert($scope.currentConversionQuery, exchangeRate);
+            $scope.resultAmount = $filter('currency')($scope.currentConversionQuery.result, ' ', 2);
+            if (!$scope.selectedConversion && !$scope.startConversion) {
+                $scope.startConversion = false;
+                saveConversionQuery();
+            }
+            $scope.selectedConversion = false;
+            $scope.startConversion = false;
         }
 
         $scope.conversionQuerys = [];

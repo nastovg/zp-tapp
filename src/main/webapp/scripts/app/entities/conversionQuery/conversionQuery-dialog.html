@@ -87,6 +87,29 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="control-label" for="field_toCurrency">Result</label>
+            <input type="number" class="form-control" name="result" id="field_result"
+                   ng-model="conversionQuery.result"
+                   required min="0" max="1000000000000"/>
+
+            <div ng-show="editForm.result.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.toCurrency.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.result.$error.min">
+                    The result value must be positive.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.result.$error.max">
+                    The result value is too big.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="control-label" for="field_conversionDate">ConversionDate</label>
             <input type="datetime-local" class="form-control" name="conversionDate" id="field_conversionDate"
                    ng-model="conversionQuery.conversionDate"

@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -109,6 +110,7 @@ public class ConversionQueryResourceIntTest {
         conversionQuery.setFromCurrency(DEFAULT_FROM_CURRENCY);
         conversionQuery.setToCurrency(DEFAULT_TO_CURRENCY);
         conversionQuery.setConversionDate(DEFAULT_CONVERSION_DATE);
+        conversionQuery.setResult(BigDecimal.TEN);
         conversionQuery.setCreatedOn(ZonedDateTime.now());
     }
 
@@ -136,6 +138,7 @@ public class ConversionQueryResourceIntTest {
         assertThat(testConversionQuery.getFromCurrency()).isEqualTo(DEFAULT_FROM_CURRENCY);
         assertThat(testConversionQuery.getToCurrency()).isEqualTo(DEFAULT_TO_CURRENCY);
         assertThat(testConversionQuery.getConversionDate()).isEqualTo(DEFAULT_CONVERSION_DATE);
+        assertThat(testConversionQuery.getResult()).isEqualTo(BigDecimal.TEN);
     }
 
     @Test
@@ -180,6 +183,24 @@ public class ConversionQueryResourceIntTest {
         int databaseSizeBeforeTest = conversionQueryRepository.findAll().size();
         // set the field null
         conversionQuery.setToCurrency(null);
+
+        // Create the ConversionQuery, which fails.
+
+        restConversionQueryMockMvc.perform(post("/api/conversionQuerys")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(conversionQuery)))
+                .andExpect(status().isBadRequest());
+
+        List<ConversionQuery> conversionQuerys = conversionQueryRepository.findAll();
+        assertThat(conversionQuerys).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkResultIsRequired() throws Exception {
+        int databaseSizeBeforeTest = conversionQueryRepository.findAll().size();
+        // set the field null
+        conversionQuery.setResult(null);
 
         // Create the ConversionQuery, which fails.
 
@@ -284,6 +305,7 @@ public class ConversionQueryResourceIntTest {
         conversionQuery.setToCurrency(UPDATED_TO_CURRENCY);
         conversionQuery.setConversionDate(UPDATED_CONVERSION_DATE);
         conversionQuery.setCreatedOn(UPDATED_CREATED_ON);
+        conversionQuery.setResult(BigDecimal.ONE);
 
         restConversionQueryMockMvc.perform(put("/api/conversionQuerys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -299,6 +321,7 @@ public class ConversionQueryResourceIntTest {
         assertThat(testConversionQuery.getToCurrency()).isEqualTo(UPDATED_TO_CURRENCY);
         assertThat(testConversionQuery.getConversionDate()).isEqualTo(UPDATED_CONVERSION_DATE);
         assertThat(testConversionQuery.getCreatedOn()).isEqualTo(UPDATED_CREATED_ON);
+        assertThat(testConversionQuery.getResult()).isEqualTo(BigDecimal.ONE);
     }
 
     @Test

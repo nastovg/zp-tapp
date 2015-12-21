@@ -19,6 +19,7 @@
                 <th><span>Amount</span></th>
                 <th><span>FromCurrency</span></th>
                 <th><span>ToCurrency</span></th>
+                <th><span>Result</span></th>
                 <th><span>ConversionDate</span></th>
                 <th><span>CreatedOn</span></th>
                 <th><span>owner</span></th>
@@ -31,6 +32,7 @@
                 <td>{{conversionQuery.amount}}</td>
                 <td>{{conversionQuery.fromCurrency}}</td>
                 <td>{{conversionQuery.toCurrency}}</td>
+                <td>{{conversionQuery.result | currency : " " : 2}}</td>
                 <td>{{conversionQuery.conversionDate | date:'medium'}}</td>
                 <td>{{conversionQuery.createdOn | date:'medium'}}</td>
                 <td>

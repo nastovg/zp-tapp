@@ -33,6 +33,10 @@
             <column name="conversion_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
+            <column name="result" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="created_on" type="timestamp">
                 <constraints nullable="false"/>
             </column>

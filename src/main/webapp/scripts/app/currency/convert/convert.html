@@ -70,7 +70,7 @@
         </div>
 
 
-        <h3 ng-show="conversionQuerys.length">History</h3>
+        <h3 ng-show="conversionQuerys.length">Last conversions</h3>
 
         <div class="table-responsive" ng-show="conversionQuerys.length">
             <table class="table table-striped">
@@ -79,6 +79,7 @@
                     <th><span>Amount</span></th>
                     <th><span>From</span></th>
                     <th><span>To</span></th>
+                    <th><span>Result</span></th>
                     <th><span>Date</span></th>
                     <th></th>
                 </tr>
@@ -88,6 +89,7 @@
                     <td>{{conversionQuery.amount}}</td>
                     <td>{{conversionQuery.fromCurrency}}</td>
                     <td>{{conversionQuery.toCurrency}}</td>
+                    <td>{{conversionQuery.result | currency : " " : 2}}</td>
                     <td>{{conversionQuery.conversionDate | date:'yyyy/MM/dd'}}</td>
                     <td>
                         <button
