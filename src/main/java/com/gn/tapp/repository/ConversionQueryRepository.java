@@ -14,5 +14,10 @@ public interface ConversionQueryRepository extends JpaRepository<ConversionQuery
     @Query("select conversionQuery from ConversionQuery conversionQuery where conversionQuery.owner.login = ?#{principal.username}")
     List<ConversionQuery> findByOwnerIsCurrentUser();
 
+    /**
+     * Gets the first 10 queries for the given user by login. The queries are oredered by creation date.
+     * @param login the user login
+     * @return top 10 conversion queries
+     */
     List<ConversionQuery> findTop10ByOwnerLoginOrderByCreatedOnDesc(String login);
 }

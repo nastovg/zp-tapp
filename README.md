@@ -3,6 +3,11 @@
 Application for secure currency convertor. In order to use the convertor every user must be registered and authenticated.
 The tapp is using the service from openexchangerates (https://openexchangerates.org/api/) 
 
+
+[CI Build](https://travis-ci.org/nastovg/zp-tapp)
+
+
+
 This application is build on JHipster as base project.
 
 Before you can build this project, you must install and configure the following dependencies on your machine:

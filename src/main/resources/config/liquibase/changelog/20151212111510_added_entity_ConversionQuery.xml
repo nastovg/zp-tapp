@@ -33,7 +33,7 @@
             <column name="conversion_date" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_on" type="timestamp" defaultValueDate="${now}">
+            <column name="created_on" type="timestamp">
                 <constraints nullable="false"/>
             </column>
             <column name="owner_id" type="bigint"/>

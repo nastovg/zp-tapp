@@ -133,7 +133,7 @@
                 <div class="form-group">
                     <label class="control-label" for="birth">Date of birth</label>
                     <input type="date" class="form-control" id="birth" ng-model="registerAccount.birth" name="birth"
-                           placeholder="Date of birth"
+                           placeholder="Date of birth (dd/mm/yyyy)"
                            min="{{minAllowedBirthDate | date : 'yyyy-MM-dd'}}" max="{{maxAllowedBirthDate | date : 'yyyy-MM-dd'}}">
 
                     <div ng-show="form.place.$dirty && form.place.$invalid">
